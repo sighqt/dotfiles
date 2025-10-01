@@ -1,18 +1,19 @@
 { pkgs, inputs, ... }:
 
 {
-  home.username = "andrewvious";
-  home.homeDirectory = "/home/andrewvious";
+  home.username = "sighqt";
+  home.homeDirectory = "/home/sighqt";
 
   home.packages = with pkgs; [
     home-manager
     wl-clipboard
     brave
     kitty
+    obsidian
     # shell
     zsh
     oh-my-zsh
-    neofetch
+    fastfetch
     # comms
     telegram-desktop
     # code
@@ -58,11 +59,11 @@
     steam
     libreoffice
     kitty-themes
-  ] ++ [ (pkgs.callPackage ./tiup.nix {}) ];
+  ];
   
   programs.kitty = {
     enable = true;
-    theme = "kanagawabones";
+    theme = "Sierra";
     font.name = "JetBrainsMono Nerd Font";
     settings = {
       hide_window_decorations = true;
@@ -73,7 +74,7 @@
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = "kanabox_default";
+      theme = "gruvbox_dark_hard";
       editor = {
         cursor-shape = {
           insert = "underline";
@@ -117,8 +118,8 @@
 
   programs.git = {
     enable = true;
-    userName = "andrewvious";
-    userEmail = "ohbandrew@gmail.com";
+    userName = "sighqt";
+    userEmail = "sighqt@gmail.com";
   };
 
   gtk = {
@@ -192,7 +193,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  home.stateVersion = "24.11"; # Please read the comment before changing.
 }
 
 

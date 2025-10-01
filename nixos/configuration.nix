@@ -14,7 +14,7 @@
 
   hardware.enableAllFirmware = true;
 
-  boot.initrd.luks.devices."luks-04f2d713-cd4e-4d6e-bb67-024a40dd176a".device = "/dev/disk/by-uuid/04f2d713-cd4e-4d6e-bb67-024a40dd176a";
+ 
 
   # video capture from external device
   # in case you feel like using OBS to stream
@@ -96,9 +96,9 @@
   # services.auto-cpufreq.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.andrewvious = {
+  users.users.sighqt = {
     isNormalUser = true;
-    description = "Andrew O'Brien";
+    description = "sighqt";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
   };
@@ -128,7 +128,7 @@
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "andrewvious";
+  services.xserver.displayManager.autoLogin.user = "sighqt";
 
   # Workaround for GNOME autologin
   systemd.services."getty@tty1".enable = false;
@@ -138,25 +138,22 @@
   nixpkgs.config.allowUnfree = true;
 
   # Experimental features
-  nix = {
-    settings = {
-      experimental-features = ["nix-command" "flakes"];
-    };
-  };
+nix.settings = {
+  experimental-features = [ "nix-command" "flakes" ];
+  extra-substituters = [ "https://cloud-scythe-labs.cachix.org" ];
+  extra-trusted-public-keys = [
+    "cloud-scythe-labs.cachix.org-1:I+IM+x2gGlmNjUMZOsyHJpxIzmAi7XhZNmTVijGjsLw="
+  ];
+};
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {   
     gnome.excludePackages = with pkgs; [
-      gnome.cheese
-      gnome.gnome-music
       gnome-tour
       epiphany
-      gnome.geary
       gedit
       gnome-text-editor
-      gnome.gnome-contacts
-      gnome.yelp
     ];
   };
 
@@ -166,11 +163,6 @@
     dedicatedServer.openFirewall = true;
   };
 
-  fonts = {
-    packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
-    ];
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -197,7 +189,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 
   # Gets rid of all the built up NixOS builds
   # from doing `sudo nixos-rebuild` over time.

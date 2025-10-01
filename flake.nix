@@ -26,7 +26,7 @@
               useUserPackages = true;
               useGlobalPkgs = true;
               extraSpecialArgs = { inherit inputs; };
-              users.andrewvious = ./home-manager/home.nix;
+              users.sighqt = ./home-manager/home.nix;
             };
           }
         ];
