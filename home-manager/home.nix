@@ -1,5 +1,10 @@
 { pkgs, inputs, ... }:
 
+let
+  cursorName = "Adwaita";
+  cursorPkg = pkgs.adwaita-icon-theme;
+  cursorSize = 20;
+in
 {
   home.username = "sighqt";
   home.homeDirectory = "/home/sighqt";
@@ -47,6 +52,7 @@
     gphoto2
     #    fix kernel header vvvvvvvvvv
     # linuxKernel.packages.linux_5_15.vrl2loopbacko
+    gnomeExtensions.dash-to-dock
     gnomeExtensions.color-picker
     gnomeExtensions.pop-shell
     gnomeExtensions.user-themes
@@ -63,10 +69,19 @@
   
   programs.kitty = {
     enable = true;
-    theme = "Sierra";
+    shellIntegration = {
+      mode = "no-cursor";
+      enableZshIntegration = true;
+    };
+    themeFile = "GruvboxMaterialDarkMedium";
     font.name = "JetBrainsMono Nerd Font";
     settings = {
+      # The window padding (in pts) (blank area between the text and the window border).
+      # A single value sets all four sides. Two values set the vertical and horizontal sides.
+      # Three values set top, horizontal and bottom. Four values set top, right, bottom and left.
+      window_padding_width = "8 0 8 8"; # extra padding for oh-my-zsh dst theme
       hide_window_decorations = true;
+      cursor_shape = "block";
     };
   };
 
@@ -74,7 +89,7 @@
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = "gruvbox_dark_hard";
+      theme = "gruvbox_material_dark_medium";
       editor = {
         cursor-shape = {
           insert = "underline";
@@ -90,7 +105,7 @@
         };
         indent-guides = {
           render = true;
-          characeter = "|";
+          character = "|";
         };
         lsp = {
           display-messages = true;
@@ -104,11 +119,6 @@
   # zsh & oh-my-zsh configurations
   programs.zsh = {
     enable = true;
-    enableCompletion = true;
-    enableAutosuggestions = true;
-    shellAliases = {
-      swaydev = "nix develop github:fuellabs/fuel.nix#sway-dev -c zsh";
-    };
   };
   programs.zsh.oh-my-zsh = {
     enable = true;
@@ -124,37 +134,47 @@
 
   gtk = {
     enable = true;
+    cursorTheme = {
+      name = cursorName;
+      package = cursorPkg;
+      size = cursorSize;
+    };
     iconTheme = {
-      name = "Colloid-dark";
-      package = pkgs.colloid-icon-theme;
+      name = "Gruvbox-Plus-Dark";
+      package = pkgs.gruvbox-plus-icons;
     };
-    theme = {
-      name = "Nordic-darker";
-      package = pkgs.nordic;
-    };
+     theme = {
+       name = "gruvbox-dark";
+       package = pkgs.gruvbox-gtk-theme;
+     };
     gtk3.extraConfig = {
-      Settings = ''
-        gtk-application-prefer-dark-theme=1
-      '';
+      "gtk-application-prefer-dark-theme" = true;
     };
     gtk4.extraConfig = {
-      Settings = ''
-        gtk-application-prefer-dark-theme=1
-      '';
+      "gtk-application-prefer-dark-theme" = true;
     };
   };
-  home.sessionVariables.GTK_THEME = "Nordic-darker";
+  home.sessionVariables.GTK_THEME = "Gruvbox-Dark";
   dconf.settings = {
-    # shell extensions
+    # shell extensions 
     "org/gnome/shell" = {
       disable-user-extensions = false;
       enabled-extensions = [
+        # "dash-to-dock@micxgx.gmail.com"        
         "pop-shell@system76.com"
         "user-theme@gnome-shell-extensions.gcampax.github.com"
       ];
     };
+    "org/gnome/shell/extensions/dash-to-dock" = {
+      dock-fixed = true;
+      dock-position = "LEFT";      
+      extend-height = false;
+      show-trash = false;
+      show-mounts-only-mounted = false;
+      disable-overview-on-startup = true;
+    };
     "org/gnome/shell/extensions/user-theme" = {
-      name = "Nordic-darker";
+      name = "gruvbox-dark";
     };
 
     # keybindings
@@ -183,6 +203,13 @@
     };
   };
 
+  home.pointerCursor = {
+    name = cursorName;
+    package = cursorPkg;
+    size = cursorSize;
+    gtk.enable = true;
+    x11.enable = true;
+  };
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
