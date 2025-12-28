@@ -1,11 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
   # Bootloader.
   boot.loader = {
     systemd-boot.enable = true;
@@ -14,14 +9,11 @@
 
   hardware.enableAllFirmware = true;
 
- 
-
   # video capture from external device
   # in case you feel like using OBS to stream
   boot.kernelModules = [ "v4l2loopback" ];
   boot.extraModulePackages = [ pkgs.linuxPackages.v4l2loopback ];
 
-  networking.hostName = "dev-one"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -51,10 +43,7 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  # Loads the drivers for AMD GPUs on boot
-  services.xserver.videoDrivers = [ "amdgpu" "radeon" ];
-  boot.initrd.kernelModules = [ "amdgpu" "radeon" ];
-  
+
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -119,11 +108,11 @@
   # docker configurations
   virtualisation.docker.enable = true;
   virtualisation.docker.rootless = {
-  enable = true;
-  setSocketVariable = true;
+    enable = true;
+    setSocketVariable = true;
   };
   virtualisation.docker.daemon.settings = {
-  data-root = "/etc/docker";
+    data-root = "/etc/docker";
   };
 
   # Enable automatic login for the user.
@@ -138,17 +127,17 @@
   nixpkgs.config.allowUnfree = true;
 
   # Experimental features
-nix.settings = {
-  experimental-features = [ "nix-command" "flakes" ];
-  extra-substituters = [ "https://cloud-scythe-labs.cachix.org" ];
-  extra-trusted-public-keys = [
-    "cloud-scythe-labs.cachix.org-1:I+IM+x2gGlmNjUMZOsyHJpxIzmAi7XhZNmTVijGjsLw="
-  ];
-};
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    extra-substituters = [ "https://cloud-scythe-labs.cachix.org" ];
+    extra-trusted-public-keys = [
+      "cloud-scythe-labs.cachix.org-1:I+IM+x2gGlmNjUMZOsyHJpxIzmAi7XhZNmTVijGjsLw="
+    ];
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment = {   
+  environment = {
     gnome.excludePackages = with pkgs; [
       gnome-tour
       epiphany

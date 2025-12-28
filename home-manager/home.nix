@@ -18,7 +18,7 @@ in
     # shell
     zsh
     oh-my-zsh
-    fastfetch
+    # fastfetch
     # comms
     telegram-desktop
     # code
@@ -119,7 +119,16 @@ in
   # zsh & oh-my-zsh configurations
   programs.zsh = {
     enable = true;
+
+    shellAliases = {
+      clr = "clear";
+      kms = "exit";
+      hak = "cargo hakari generate";
+      hakv = "cargo hakari verify";
+    };
   };
+
+  
   programs.zsh.oh-my-zsh = {
     enable = true;
     plugins = [ "git" ];
@@ -143,10 +152,10 @@ in
       name = "Gruvbox-Plus-Dark";
       package = pkgs.gruvbox-plus-icons;
     };
-     theme = {
-       name = "gruvbox-dark";
-       package = pkgs.gruvbox-gtk-theme;
-     };
+    theme = {
+      name = "gruvbox-dark";
+      package = pkgs.gruvbox-gtk-theme;
+    };
     gtk3.extraConfig = {
       "gtk-application-prefer-dark-theme" = true;
     };
@@ -160,22 +169,33 @@ in
     "org/gnome/shell" = {
       disable-user-extensions = false;
       enabled-extensions = [
-        # "dash-to-dock@micxgx.gmail.com"        
+        "dash-to-dock@micxgx.gmail.com"        
         "pop-shell@system76.com"
         "user-theme@gnome-shell-extensions.gcampax.github.com"
       ];
     };
     "org/gnome/shell/extensions/dash-to-dock" = {
-      dock-fixed = true;
-      dock-position = "LEFT";      
+      dock-fixed = false;
+      dock-position = "LEFT";
       extend-height = false;
       show-trash = false;
       show-mounts-only-mounted = false;
       disable-overview-on-startup = true;
+      autohide-in-fullscreen=true;
+      intellihide = true;
+      intellihide-mode = "FOCUS_APPLICATION_WINDOWS";
+      scroll-to-focused-application=false;
     };
     "org/gnome/shell/extensions/user-theme" = {
       name = "gruvbox-dark";
     };
+
+    # keybindings for GNOME Shell itself
+    "org/gnome/shell/keybindings" = {
+      # Ctrl+Space opens the overview
+      toggle-overview = [ "<Control>space" ];
+    };
+
 
     # keybindings
     "org/gnome/shell/keybindings" = {

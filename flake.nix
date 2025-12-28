@@ -11,26 +11,28 @@
   };
 
   outputs = { nixpkgs, home-manager, ... } @inputs:
-  let
-    system = "x86_64-linux";
-  in
-  {
-    nixosConfigurations = {
-      dev-one = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./nixos/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useUserPackages = true;
-              useGlobalPkgs = true;
-              extraSpecialArgs = { inherit inputs; };
-              users.sighqt = ./home-manager/home.nix;
-            };
-          }
-        ];
+    let
+      system = "x86_64-linux";
+    in
+    {
+      nixosConfigurations = {
+        dev-one = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./systems/dev-one/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useUserPackages = true;
+                useGlobalPkgs = true;
+                extraSpecialArgs = { inherit inputs; };
+                users.sighqt = ./home-manager/home.nix;
+              };
+            }
+          ];
+        };
       };
+
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixpkgs-fmt;
     };
-  };
 }
