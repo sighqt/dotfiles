@@ -73,7 +73,7 @@ in
       mode = "no-cursor";
       enableZshIntegration = true;
     };
-    themeFile = "GruvboxMaterialDarkMedium";
+    themeFile = "kanagawa";
     font.name = "JetBrainsMono Nerd Font";
     settings = {
       # The window padding (in pts) (blank area between the text and the window border).
@@ -89,7 +89,7 @@ in
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = "gruvbox_material_dark_medium";
+      theme = "kanabox_default";
       editor = {
         cursor-shape = {
           insert = "underline";
@@ -125,6 +125,7 @@ in
       kms = "exit";
       hak = "cargo hakari generate";
       hakv = "cargo hakari verify";
+      crd = "cd ~/Code/CloudScytheLabs/cloud-reaper && nix develop -c zsh";
     };
   };
 
@@ -176,7 +177,7 @@ in
     };
     "org/gnome/shell/extensions/dash-to-dock" = {
       dock-fixed = false;
-      dock-position = "LEFT";
+      dock-position = "RIGHT";
       extend-height = false;
       show-trash = false;
       show-mounts-only-mounted = false;
