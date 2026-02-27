@@ -15,6 +15,7 @@ in
     brave
     kitty
     obsidian
+    discord
     # shell
     zsh
     oh-my-zsh
@@ -73,7 +74,7 @@ in
       mode = "no-cursor";
       enableZshIntegration = true;
     };
-    themeFile = "kanagawa";
+    themeFile = "Doom_One";
     font.name = "JetBrainsMono Nerd Font";
     settings = {
       # The window padding (in pts) (blank area between the text and the window border).
@@ -89,7 +90,7 @@ in
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = "kanabox_default";
+      theme = "base16_terminal";
       editor = {
         cursor-shape = {
           insert = "underline";
@@ -177,7 +178,7 @@ in
     };
     "org/gnome/shell/extensions/dash-to-dock" = {
       dock-fixed = false;
-      dock-position = "RIGHT";
+      dock-position = "TOP";
       extend-height = false;
       show-trash = false;
       show-mounts-only-mounted = false;
